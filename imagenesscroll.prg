@@ -1,3 +1,8 @@
+*Funcion que muestra las imágenes en un recuadro
+*La variable DirImg en Procedure Init define el directorio donde están las imagenes
+*El nombre de las imagenes deben empezar con el codigo seguido de a,b,c si son varias
+*Codigo adaptado de http://yousfi.over-blog.com/2015/03/scrolling-texts-images-in-visual-foxpro.html
+
 FUNCTION imagenesScroll
 PARAMETERS codigo
 PUBLIC yform
@@ -19,7 +24,7 @@ DEFINE CLASS yscrollIm As Form
     gnbre = 0
     Name = "Form1"
 
-    ADD OBJECT label1 As Label With ;
+    ADD OBJECT label1 As Label WITH ;
         FontSize = 8, ;
         Anchor = 768, ;
         Alignment = 2, ;
@@ -34,10 +39,7 @@ DEFINE CLASS yscrollIm As Form
 
     PROCEDURE my
         LPARAMETERS nButton, nShift, nXCoord, nYCoord
-
-        *--- aevent create an array laEvents
         Aevents( myArray, 0)
-        *--- reference the calling object
         loObject = myArray[1]
         loObject.MousePointer=15
         xrec=Substr(loObject.Name,6)
@@ -78,11 +80,11 @@ DEFINE CLASS yscrollIm As Form
         gnbre=Adir(gabase,m.yrep+ALLTRIM(STR(codigo))+"*.*")
         IF gnbre>0
         CREATE CURSOR ycurs( yimage c(200))
-        For i=1 TO gnbre
+        FOR i=1 TO gnbre
             IF Inlist(Lower(Justext(gabase(i,1))),"png","bmp","jpg","gif")
                 INSERT Into ycurs Values(m.yrep+gabase(i,1))
             ENDIF 
-        Endfor
+        ENDFOR
 
         Thisform.gnbre=Reccount()
         *brow
@@ -92,28 +94,28 @@ DEFINE CLASS yscrollIm As Form
         ENDIF 
 
         WITH Thisform
-            .ScrollBars=0   &&if scollbars=1 can scoll form horizontally
+            .ScrollBars=0  
             .Caption=.Caption+"("+Trans(Thisform.gnbre)+" images)"
-            Sele ycurs
-            Scan
+            SELECT ycurs
+            SCAN
                 i=Recno()
                 .AddObject("image"+Trans(i),"image")
 
-                With Eval(".image"+Trans(i))
+                WITH Eval(".image"+Trans(i))
                     .Stretch=2
                     .Height=Thisform.Height-40
                     .Width=.Height*2
                     .Top=15
                     .BorderStyle=1
-                    If i=1
+                    IF i=1
                         .Left=0
-                    Else
+                    ELSE
                         .Left=Eval(".parent.image"+Trans(i-1)+".left")+.Width
-                    Endi
+                    ENDIF
                     .Picture=yimage
                     .Visible=.T.
-                Endwith
-            Endscan
+                ENDWITH
+            ENDSCAN
         ENDWITH
 
         LOCATE
