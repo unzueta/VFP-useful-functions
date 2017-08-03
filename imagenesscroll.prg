@@ -1,8 +1,3 @@
-*Funcion que muestra las imágenes en un recuadro
-*La variable DirImg en Procedure Init define el directorio donde están las imagenes
-*El nombre de las imagenes deben empezar con el codigo seguido de a,b,c si son varias
-*Codigo adaptado de http://yousfi.over-blog.com/2015/03/scrolling-texts-images-in-visual-foxpro.html
-
 FUNCTION imagenesScroll
 PARAMETERS codigo
 PUBLIC yform
