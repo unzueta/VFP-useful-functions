@@ -1,3 +1,8 @@
+*Funcion que muestra las imágenes en un recuadro
+*La variable DirImg en Procedure Init define el directorio donde están las imagenes
+*El nombre de las imagenes deben empezar con el codigo seguido de a,b,c si son varias
+*Codigo adaptado de http://yousfi.over-blog.com/2015/03/scrolling-texts-images-in-visual-foxpro.html
+
 FUNCTION imagenesScroll
 PARAMETERS codigo
 PUBLIC yform
@@ -14,7 +19,7 @@ DEFINE CLASS yscrollIm As Form
     Width = 803
     ShowWindow = 2
     ScrollBars = 1
-    Caption = "Haga click con el bot�n izquierdo o derecho para cambiar de imagen"
+    Caption = "Haga click con el botón izquierdo o derecho para cambiar de imagen"
     BackColor = Rgb(0,0,0)
     gnbre = 0
     Name = "Form1"
